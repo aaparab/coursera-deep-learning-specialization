@@ -12,3 +12,19 @@
 ### Week 2: 
 
 - One reason that *mean squared error* is not used in the cost function of logistic regression is that doing so makes the cost function non-convex. [Video reference](https://www.coursera.org/learn/neural-networks-deep-learning/lecture/yWaRd/logistic-regression-cost-function)
+
+- **Broadcasting**: `A(m, n) +,-,*,/ B(1, n)`
+This reshapes B into (m, n) matrix and does element-wise operation. [Video reference](https://www.coursera.org/learn/neural-networks-deep-learning/lecture/uBuTv/broadcasting-in-python)
+
+- **Rank-1 array v/s vector**: 
+```
+import numpy as np
+a = np.random.randn(5)    # Rank-1 array
+a.shape                   # (5,)
+
+b = np.random.randn(5, 1) # Column vector
+c = np.random.randn(1, 5) # Row vector
+
+assert(c.shape == (1, 5)) # True
+```
+Defining explicitly (like `b` or `c`) avoids errors. 
