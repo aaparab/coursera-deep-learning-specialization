@@ -85,4 +85,15 @@ Suppose I implement the dropout regularization on a particular layer with `keep_
 
 - Vanishing/Exploding gradients: To solve this problem, use variants of Keras' `lecun_uniform` random initialization. [Video reference](https://www.coursera.org/learn/deep-neural-network/lecture/C9iQO/vanishing-exploding-gradients)
 
+## Week 2: 
 
+- With mini-batch gradient descent, typical batch size: 64, 128, 256, 512. [Video reference](https://www.coursera.org/learn/deep-neural-network/lecture/lBXu8/understanding-mini-batch-gradient-descent)
+
+- Momentum: 
+```
+To compute an exponentially weighted average of the gradients, and then use that gradient to update the weights.
+```
+
+- **Adam = Gradescent with Momentum + RMSProp**.
+
+- Learning rate decay: Slowly reduce learning rate over time. 
