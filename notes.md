@@ -96,4 +96,36 @@ To compute an exponentially weighted average of the gradients, and then use that
 
 - **Adam = Gradescent with Momentum + RMSProp**.
 
-- Learning rate decay: Slowly reduce learning rate over time. 
+- Learning rate decay: Slowly reduce learning rate over time.
+
+### Week 3: Hyperparameter Tuning
+
+- Most important hyperparameter to tune: Learning rate `alpha`. 
+
+- Next in importance: `beta` in momentum / RMSProp, # hidden units, mini-batch size.
+
+- Main steps: Use random values and **not** grid search; do coarse-to-fine. [Video reference](https://www.coursera.org/learn/deep-neural-network/lecture/dknSn/tuning-process)
+
+- Intuitions do get stale. Re-evaluate (hyperparameters) occasionally. 
+
+#### Batch Normalization
+
+- Can we normalize z^{[l]} (or a^{[l]}) so as to train the next layer w^{[l+1]}, b^{[l+1]} faster? [Video link](https://www.coursera.org/learn/deep-neural-network/lecture/4ptp2/normalizing-activations-in-a-network); also see [Keras](https://keras.io/api/layers/normalization_layers/batch_normalization/) 
+
+- [Original paper](https://arxiv.org/pdf/1502.03167.pdf): Batch Normalization allows us to use much higher learning rates and be less careful about initialization. It also acts as a regularizer, in some cases eliminating the need for Dropout. 
+
+- Why batch normalization works: [Video reference](https://www.coursera.org/learn/deep-neural-network/lecture/81oTm/why-does-batch-norm-work)
+    - Normalizing the input features speeds up learning
+    - It makes weights deeper in your network, say weight on layer 10, more robust to changes in weights in earlier layers of the network. 
+
+- Covariate shift: Data distribution changing while training (say after changing the mini-batch).
+
+- What batch normalization does, is that it limits the amount to which updating the parameters in the early layers can affect the distribution of balues that the latter layer sees and therefore has to learn on.
+
+- Has some regularization effect: The batch normalization adds some noise to the values within that minibatch similar to dropout, making dropout slightly redundent. So also increasing the batch size reduces (the noise and hence, reduces) this regularization effect.
+
+
+
+- Multiclass classification: Softmax. Generalization of logistic regression; same loss function as LR, i.e., L(y, \hat{y}) = \sum_{j = 1}^c y_j log(\hat{y_j}). 
+
+
