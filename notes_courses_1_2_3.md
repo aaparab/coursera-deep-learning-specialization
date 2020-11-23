@@ -52,18 +52,18 @@ Assumption: Both training set and test set are from the same distribution.
 
 - Why not regularize the bias term? In practice there are many input parameters and hidden nodes so not adding the regularization to _one_ of the terms (intercept `b`) shouldn't affect the overall training. [Video reference](https://www.coursera.org/learn/deep-neural-network/lecture/Srsrc/regularization) 
 
-- L^1 v/s L^2 regularization: Using L^1 regularization makes the weight vector sparse. (Why?) [Same video as above]
+- L<sup>1</sup> v/s L<sup>2</sup> regularization: Using L<sup>1</sup> regularization makes the weight vector sparse. (Why?) [Same video as above]
 
-- **L^2 regularization is Weight Decay**: The expression for updating the weight `w` is 
+- **L<sup>2</sup> regularization is Weight Decay**: The expression for updating the weight `w` is 
 
-w<sup>l</sup> := w<sup>l</sup> - &alpha;*&lambda;/m w<sup>l</sup> - &alpha; (from BackProp)
+    w<sup>l</sup> := w<sup>l</sup> - &alpha;*&lambda;/m w<sup>l</sup> - &alpha; (from BackProp)
 
 This reduction in w<sup>l</sup> is referred to as *weight decay*.
 
 - **Regularization prevents overfitting (Intuition ONLY)**: 
-    1. If lambda > 0 then weights w tend to be small, which is equivalent to turning off many neurons, which makes the model closer to being linear. 
-    2. If lambda > 0 then weights w tend to be small, so in the equation 
-        `z = w*a + b`, z tends to be small, i.e., close to zero and in this range, say $(-&epsilon;, &epsilon;)$ the model tends towards being linear.
+    1. If &lambda; > 0 then weights w tend to be small, which is equivalent to turning off many neurons, which makes the model closer to being linear. 
+    2. If &lambda; > 0 then weights w tend to be small, so in the equation 
+        `z = w*a + b`, z tends to be small, i.e., close to zero and in this range, say (-&epsilon;, &epsilon;) the model tends towards being linear.
 
 - **(Inverted) Dropout Implementation**:
 
