@@ -98,7 +98,7 @@ To compute an exponentially weighted average of the gradients, and then use that
 
 - Learning rate decay: Slowly reduce learning rate over time.
 
-### Week 3: Hyperparameter Tuning
+## Week 3: Hyperparameter Tuning
 
 - Most important hyperparameter to tune: Learning rate `alpha`. 
 
@@ -108,7 +108,7 @@ To compute an exponentially weighted average of the gradients, and then use that
 
 - Intuitions do get stale. Re-evaluate (hyperparameters) occasionally. 
 
-#### Batch Normalization
+### Batch Normalization
 
 - Can we normalize z^{[l]} (or a^{[l]}) so as to train the next layer w^{[l+1]}, b^{[l+1]} faster? [Video link](https://www.coursera.org/learn/deep-neural-network/lecture/4ptp2/normalizing-activations-in-a-network); also see [Keras](https://keras.io/api/layers/normalization_layers/batch_normalization/) 
 
@@ -124,8 +124,71 @@ To compute an exponentially weighted average of the gradients, and then use that
 
 - Has some regularization effect: The batch normalization adds some noise to the values within that minibatch similar to dropout, making dropout slightly redundent. So also increasing the batch size reduces (the noise and hence, reduces) this regularization effect.
 
-
+---
 
 - Multiclass classification: Softmax. Generalization of logistic regression; same loss function as LR, i.e., L(y, \hat{y}) = \sum_{j = 1}^c y_j log(\hat{y_j}). 
+
+
+# Structuring Machine Learning Projects
+
+## Week 1: Introduction to ML strategy
+
+- Satisfying/Optimizing metric: If you have `N` metrics, Ng recommends having `N-1` satisfying metrics (e.g., run time < 100ms) and `1` optimizing metric. [Video reference](https://www.coursera.org/learn/machine-learning-projects/lecture/uNWnZ/satisficing-and-optimizing-metric)
+
+- Train/dev/test ratio: Choose dev and test set size to be the smallest size that gives high confidence in the overall performance of the system. 
+    - Old: 70/30
+    - New: 98/1/1
+
+- **Avoidable bias** = Training error - Human-level (Bayes') error
+**Variance** = Dev error - Training error 
+
+## Week 2: Error Analysis
+
+- Counting the fraction of mislabelled images gives an idea about which direction to proceed. [Video reference](https://www.coursera.org/learn/machine-learning-projects/lecture/IGRRb/cleaning-up-incorrectly-labeled-data) 
+
+- DL algorithms are quite robust to random errors in the training set. Thus incorrectly labelled examples are okay so long as their percentage is small. These mislabellings should **not** be systematic errors. 
+
+- Ng's strategy of error analysis: Take 100 mislabelled examples and tabulate them with common reasons of being mislabelled. For instance, 
+
+| Image | Dog | Big cat | Mislabelled | Remarks |
+|-------|-----|---------|-------------|---------|
+| 1     | Y   |         |             | ..      |
+| 2     |     |         | Y           |         |
+|       |     |         |             |         |
+| Total | 12  | 30      | 58          |         |
+
+- Training and testing on different distributions: 
+    He discusses what to do when the test-quality images are few and training-quality images are more. Put all training-quality images in the training set and the dev and test sets should comprise of the **same** test-quality images. [Video reference](https://www.coursera.org/learn/machine-learning-projects/lecture/Xs9IV/training-and-testing-on-different-distributions)
+
+- Bias and variance with mismatched data distributions:
+    In the above problem, it is difficult to quantify that the observed variance was due to overfitting on the training set, or due to the dev set being _inherently different_. In this case, sub-divide the entire training set into a training set (where to use backprop) and another training-dev set to make inferences. Note that
+
+    - Train and train-dev have same distribution
+    - dev and test have the same distribution. 
+
+    Doing so, we realize that variance is the difference between training and training-dev set. Thus we can identify between *variance* problem and *data-distribution* problem. 
+
+| ERROR ANALYSIS      | %   | Diff | Cause                            |
+|---------------------|-----|------|----------------------------------|
+| Human (Bayes) error | 4%  |      |                                  |
+|                     |     | 3%   | Avoidable bias                   |
+| Training set error  | 7%  |      |                                  |
+|                     |     | 3%   | Variance                         |
+| Training-dev error  | 10% |      |                                  |
+|                     |     | 2%   | Data mismatch                    |
+| Dev error           | 12% |      |                                  |
+|                     |     | 0%   | Degree of overfitting to dev set |
+| Test error          | 12% |      |                                  |
+
+- Transfer Learning: Task A --> Task B
+    
+    - Task A and B have the same input x,
+    - Lot more data for task A than B,
+    - Low-level features from A could be helpful for learning B. 
+
+- Multi-task Learning: 
+    
+    - Training on a set of tasks that could benefit from having shared low-level features (e.g., detect stop sign, pedestrian, lights in autonomous driving).
+    - Data for each task is quite similar. 
 
 
