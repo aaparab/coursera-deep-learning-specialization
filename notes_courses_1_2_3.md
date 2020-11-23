@@ -55,10 +55,10 @@ Assumption: Both training set and test set are from the same distribution.
 - L^1 v/s L^2 regularization: Using L^1 regularization makes the weight vector sparse. (Why?) [Same video as above]
 
 - **L^2 regularization is Weight Decay**: The expression for updating the weight `w` is 
-```
+
 w<sup>l</sup> := w<sup>l</sup> - &alpha;*&lambda;/m w<sup>l</sup> - &alpha; (from BackProp)
-```
-This reduction in `w<sup>l</sup>` is referred to as *weight decay*.
+
+This reduction in w<sup>l</sup> is referred to as *weight decay*.
 
 - **Regularization prevents overfitting (Intuition ONLY)**: 
     1. If lambda > 0 then weights w tend to be small, which is equivalent to turning off many neurons, which makes the model closer to being linear. 
