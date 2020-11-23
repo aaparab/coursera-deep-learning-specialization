@@ -1,13 +1,14 @@
-# 1. Neural Networks and Deep Learning
+---
+# Course 1. Neural Networks and Deep Learning
 ---
 
-## Week 1: 
+## Week 1: Introduction to deep learning
 
 - Scale drives deep learning progress: Increase in labelled data, computational power and better algorithms have made deep learning take off. 
 
 - The slope of the sigmoid function is close to zero for really small and really large input values. This makes relu a better choice, since **gradient descent becomes faster**.[Video reference](https://www.coursera.org/learn/neural-networks-deep-learning/lecture/praGm/why-is-deep-learning-taking-off)
 
-## Week 2: 
+## Week 2: Neural network basics
 
 - One reason that *mean squared error* is not used in the cost function of logistic regression is that doing so makes the cost function non-convex. [Video reference](https://www.coursera.org/learn/neural-networks-deep-learning/lecture/yWaRd/logistic-regression-cost-function)
 
@@ -28,10 +29,11 @@ assert(c.shape == (1, 5)) # True
 Defining explicitly (like `b` or `c`) avoids errors.
 
 
-# Improving Deep Neural Networks
+---
+# Course 2. Improving Deep Neural Networks
 ---
 
-## Week 1:
+## Week 1: Practical aspects of Deep Learning
 
 #### Much of the stuff in this week is discussed in Yann Lecun's excellent paper [Efficient BackProp](http://yann.lecun.com/exdb/publis/pdf/lecun-98b.pdf). Must read! 
 
@@ -42,11 +44,11 @@ Defining explicitly (like `b` or `c`) avoids errors.
 |      Both     |              |     15%     |     30%    |                                                      |
 |    Neither    |              |      1%     |     2%     |                                                      |
 
-This is assuming very low Bayes error, i.e., with best available or human score.Otherwise consider Train error - Bayes error.
+This is assuming very low Bayes error, i.e., with best available or human score.Otherwise consider (Train error - Bayes error).
 
 Assumption: Both training set and test set are from the same distribution.
 
-- Bias-Variance tradeoff: Used to exist in pre-Deep Learning days. But now, using bigger network and getting more data can help in reducing both - bias and variance. So no longer a trade-off. One reason why Deep Learning has taken off for supervised learning. [Video reference](https://www.coursera.org/learn/deep-neural-network/lecture/ZBkx4/basic-recipe-for-machine-learning)
+- **Bias-Variance tradeoff**: Used to exist in pre-Deep Learning days. But now, using bigger network and getting more data can help in reducing both - bias and variance. So no longer a trade-off. One reason why Deep Learning has taken off for supervised learning. [Video reference](https://www.coursera.org/learn/deep-neural-network/lecture/ZBkx4/basic-recipe-for-machine-learning)
 
 - Why not regularize the bias term? In practice there are many input parameters and hidden nodes so not adding the regularization to _one_ of the terms (intercept `b`) shouldn't affect the overall training. [Video reference](https://www.coursera.org/learn/deep-neural-network/lecture/Srsrc/regularization) 
 
@@ -54,14 +56,14 @@ Assumption: Both training set and test set are from the same distribution.
 
 - **L^2 regularization is Weight Decay**: The expression for updating the weight `w` is 
 ```
-w^[l] := w^[l] - alpha*lambda/m w^[l] - alpha(from BackProp)
+w<sup>l</sup> := w<sup>l</sup> - &alpha;*&lambda;/m w<sup>l</sup> - &alpha; (from BackProp)
 ```
-This reduction in `w^[l]` is referred to as *weight decay*.
+This reduction in `w<sup>l</sup>` is referred to as *weight decay*.
 
 - **Regularization prevents overfitting (Intuition ONLY)**: 
     1. If lambda > 0 then weights w tend to be small, which is equivalent to turning off many neurons, which makes the model closer to being linear. 
     2. If lambda > 0 then weights w tend to be small, so in the equation 
-        `z = w*a + b`, z tends to be small, i.e., close to zero and in this range, say $(-\varepsilon, \varepsilon)$ the model tends towards being linear. 
+        `z = w*a + b`, z tends to be small, i.e., close to zero and in this range, say $(-&epsilon;, &epsilon;)$ the model tends towards being linear.
 
 - **(Inverted) Dropout Implementation**:
 
@@ -71,7 +73,7 @@ Suppose I implement the dropout regularization on a particular layer with `keep_
 
 - Usually input layers have `keep_prob = 1`. Typically use high values of `keep_prob` to layers where you might think overfit more. This means more hyperparameters to tune over. If that isn't preferable, use dropout on select layers _only_ and use the same `keep_prob` in each. 
 
-- Note: Since the cost function `J` with dropout is not well-defined, when using the error plots, we ignore the dropout.
+- Note: Since the cost function `J` with dropout is not well-defined, <span style="text-decoration: underline">when using the error plots, we ignore the dropout.<\span>
 
 - **Other Regularizations**: 
     - Data augumentations (If detecting images, augument to training set by modifying existing images - distortion, rotation). [Video link](https://www.coursera.org/learn/deep-neural-network/lecture/Pa53F/other-regularization-methods)
@@ -85,7 +87,7 @@ Suppose I implement the dropout regularization on a particular layer with `keep_
 
 - Vanishing/Exploding gradients: To solve this problem, use variants of Keras' `lecun_uniform` random initialization. [Video reference](https://www.coursera.org/learn/deep-neural-network/lecture/C9iQO/vanishing-exploding-gradients)
 
-## Week 2: 
+## Week 2: Optimization algorithms
 
 - With mini-batch gradient descent, typical batch size: 64, 128, 256, 512. [Video reference](https://www.coursera.org/learn/deep-neural-network/lecture/lBXu8/understanding-mini-batch-gradient-descent)
 
@@ -98,7 +100,7 @@ To compute an exponentially weighted average of the gradients, and then use that
 
 - Learning rate decay: Slowly reduce learning rate over time.
 
-## Week 3: Hyperparameter Tuning
+## Week 3: Hyperparameter Tuning, Batch Normalization and Programming Frameworks
 
 - Most important hyperparameter to tune: Learning rate `alpha`. 
 
@@ -110,7 +112,7 @@ To compute an exponentially weighted average of the gradients, and then use that
 
 ### Batch Normalization
 
-- Can we normalize z^{[l]} (or a^{[l]}) so as to train the next layer w^{[l+1]}, b^{[l+1]} faster? [Video link](https://www.coursera.org/learn/deep-neural-network/lecture/4ptp2/normalizing-activations-in-a-network); also see [Keras](https://keras.io/api/layers/normalization_layers/batch_normalization/) 
+- Can we normalize z<sup>[l]</sup> (or a<sup>[l]</sup>) so as to train the next layer w<sup>[l+1]</sup>, b<sup>[l+1]</sup> faster? [Video link](https://www.coursera.org/learn/deep-neural-network/lecture/4ptp2/normalizing-activations-in-a-network); also see [Keras](https://keras.io/api/layers/normalization_layers/batch_normalization/) 
 
 - [Original paper](https://arxiv.org/pdf/1502.03167.pdf): Batch Normalization allows us to use much higher learning rates and be less careful about initialization. It also acts as a regularizer, in some cases eliminating the need for Dropout. 
 
@@ -124,23 +126,26 @@ To compute an exponentially weighted average of the gradients, and then use that
 
 - Has some regularization effect: The batch normalization adds some noise to the values within that minibatch similar to dropout, making dropout slightly redundent. So also increasing the batch size reduces (the noise and hence, reduces) this regularization effect.
 
----
+
 
 - Multiclass classification: Softmax. Generalization of logistic regression; same loss function as LR, i.e., L(y, \hat{y}) = \sum_{j = 1}^c y_j log(\hat{y_j}). 
 
 
-# Structuring Machine Learning Projects
+---
+# Course 3: Structuring Machine Learning Projects
+---
 
 ## Week 1: Introduction to ML strategy
 
 - Satisfying/Optimizing metric: If you have `N` metrics, Ng recommends having `N-1` satisfying metrics (e.g., run time < 100ms) and `1` optimizing metric. [Video reference](https://www.coursera.org/learn/machine-learning-projects/lecture/uNWnZ/satisficing-and-optimizing-metric)
 
 - Train/dev/test ratio: Choose dev and test set size to be the smallest size that gives high confidence in the overall performance of the system. 
-    - Old: 70/30
-    - New: 98/1/1
+    - Previously: 70/30
+    - Nowadays: 98/1/1
 
 - **Avoidable bias** = Training error - Human-level (Bayes') error
-**Variance** = Dev error - Training error 
+
+  **Variance** = Dev error - Training error 
 
 ## Week 2: Error Analysis
 
@@ -154,7 +159,8 @@ To compute an exponentially weighted average of the gradients, and then use that
 |-------|-----|---------|-------------|---------|
 | 1     | Y   |         |             | ..      |
 | 2     |     |         | Y           |         |
-|       |     |         |             |         |
+| .     |     |         |             |         |
+| .     |     |         |             |         |
 | Total | 12  | 30      | 58          |         |
 
 - Training and testing on different distributions: 
@@ -166,7 +172,7 @@ To compute an exponentially weighted average of the gradients, and then use that
     - Train and train-dev have same distribution
     - dev and test have the same distribution. 
 
-    Doing so, we realize that variance is the difference between training and training-dev set. Thus we can identify between *variance* problem and *data-distribution* problem. 
+    Doing so, we realize that variance is the difference between training and training-dev set. Thus we can identify between **variance** problem and **data-distribution** problem. 
 
 | ERROR ANALYSIS      | %   | Diff | Cause                            |
 |---------------------|-----|------|----------------------------------|
@@ -180,7 +186,7 @@ To compute an exponentially weighted average of the gradients, and then use that
 |                     |     | 0%   | Degree of overfitting to dev set |
 | Test error          | 12% |      |                                  |
 
-- Transfer Learning: Task A --> Task B
+- Transfer Learning: Task A &rarr; Task B
     
     - Task A and B have the same input x,
     - Lot more data for task A than B,
