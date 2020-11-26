@@ -30,3 +30,57 @@
 
 - The convolutional structure makes the image detection _translation-invariant_. 
 
+## Week 2: Deep convolutional models: case studies
+
+- LeNet-5: [Wiki](https://en.wikipedia.org/wiki/LeNet#Structure[5]_[6])
+
+    - Around 60K parameters.
+    - Filter dimensions n_H, n_W decrease to right.
+    - number of channels n_C increases to right.
+    - Typical arrangements: CONV --> POOL --> CONV --> POOL --> FC --> FC --> OUTPUT
+    - Used _sigmoid, tanh_ not relu back then. 
+    - [Original paper](https://pdfs.semanticscholar.org/62d7/9ced441a6c78dfd161fb472c5769791192f6.pdf)
+
+- AlexNet: [Wiki](https://en.wikipedia.org/wiki/AlexNet#Network_design)
+
+    - [Original paper](https://papers.nips.cc/paper/2012/file/c399862d3b9d6b76c8436e924a68c45b-Paper.pdf)
+    - 60M parameters. 
+    - Used _relu_ activation, _dropout_ regularization, multiple GPUs. 
+    - Easy paper to read, says Ng. 
+
+- VGG-16:
+
+    - [Original paper](https://arxiv.org/abs/1409.1556)
+
+- ResNet: [Wiki](https://en.wikipedia.org/wiki/Residual_neural_network)
+    
+    - [Original paper](https://arxiv.org/abs/1512.03385)
+    - Information from layer l goes through a _short cut_ (or _skipped connection_) to layer (l+2)
+    - a^[l+2] = g(z^[l+2] + a^[l])
+    - [Video reference](https://www.coursera.org/learn/convolutional-neural-networks/lecture/HAhz9/resnets) 
+    - Used to alleviate vanishing and exploding gradients problem
+    - What goes wrong in very deep plain nets is that when you make the network deeper and deeper, it is actually very difficult for it to choose parameters that learn even the identity function, which is why a lot of layers end up making the result worse. 
+    - The main reason that residual network works is that it is so easy for these extra layers to learn the identity function that you are kind of guaranteed that it doesn't hurt performance and then a lot of time you get lucky and even helps performance. [Video reference](https://www.coursera.org/learn/convolutional-neural-networks/lecture/XAKNO/why-resnets-work)
+
+- 1x1 convolution: Basically having a fully-connected network that multiplies each channel and outputs one node. Also called _network-in-network_. 
+
+    - This is a way to shrink n_C. Use n_C filters of size 1x1xn_C_prev. 
+
+- Inception network:
+
+    - Concatenates 1x1, 3x3, 5x5 filters and MAXPOOL layers into one Inception layer. 
+    - ![We need to go deeper](https://miro.medium.com/max/1400/0*W8LNnUr9FZLH7ghg.jpg)
+    - Softmax layer attached to intermediate hidden layers also seems to give reasonable prediction. This appears to have a regularizing effect. 
+
+- Using open-source implementation: Always a good idea to use models and weights trained by other open-source implementations. 
+
+- Transfer Learning: [Video reference](https://www.coursera.org/learn/convolutional-neural-networks/lecture/4THzO/transfer-learning) 
+    - If you have less data, use the entire model and weights of an open-source trained model and just change the last (softmax) layer to suit your application. 
+    - If you have moderate sized data, freeze (set as non-trainable) the first few layers and train the rest. 
+
+    - If you have a huge dataset, keep all layers trainable but only use the trained weights as the initial state of the model. 
+
+- Data augumentation: More often than not, computer vision problems can be solved by having enough data. So one can create more training examples by techniques such as **mirroring**, **random cropping**, **rotation**, **shearing** and **color shifting** (+20R, -20G, +10B) etc. [Video reference](https://www.coursera.org/learn/convolutional-neural-networks/lecture/AYzbX/data-augmentation) 
+
+    - The AlexNet paper uses _PCA color augumentation_. 
+
