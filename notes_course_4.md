@@ -84,3 +84,34 @@
 
     - The AlexNet paper uses _PCA color augumentation_. 
 
+
+## Week 3: Detection algorithms
+
+- Object localization: Along with the output predicting a bunch of objects, say pedestrian/car/motorcycle/light using a softmax layer, add output vector that also predicts the coordinates of the bounding box. Note that the training set needs to have these coordinates also. Moreover the loss function needs to be modified appropriately, see [Video reference](https://www.coursera.org/learn/convolutional-neural-networks/lecture/nEeJM/object-localization). 
+
+- Landmark detection: Along with the ConvNet output predicting an object, add say 64 coordinates of the object we are interested in. [Video reference](https://www.coursera.org/learn/convolutional-neural-networks/lecture/OkD3X/landmark-detection). 
+
+- Sliding window detection: Once a ConvNet is trained to detect an object, crop the image under consideration and pass each cropped image through the CNN. Change window size. [Video reference](https://www.coursera.org/learn/convolutional-neural-networks/lecture/VgyWR/object-detection). 
+
+- Convolutional Implementation of Sliding Window: There is a lot of redundency in the previous sliding window construction. That can be avoided by using a convolutional implementation of a sliding window. [Video reference](https://www.coursera.org/learn/convolutional-neural-networks/lecture/6UnU4/convolutional-implementation-of-sliding-windows). 
+
+- Advantage of convolutional implementation of sliding window: For chessboard piece classification!
+
+- YOLO algorithm for object-detection: [Original paper](https://arxiv.org/pdf/1506.02640.pdf) Ng says difficult to read. 
+
+- Intersection over Union (IOU): Take ratio of intersection to union of the two sets - bounding box containing object, and grid (filter) box. If this ratio is > threshhold, then `correct`. This ratio is 1 if and only if the two boxes coincide. 
+
+- Non-max suppression algorithm: [Video reference](https://www.coursera.org/learn/convolutional-neural-networks/lecture/dvrjH/non-max-suppression) 
+
+    - For each box, we predict a vector containing
+        - the probability of the object being in the box (p_c)
+        - the centroid and coordinates of the box, and
+        - softmax identifying the object between few classes. 
+    - Discard all boxes with p_c < 0.6
+    - Pick the box with the largest p_c, output that as a prediction
+    - Discard any remaining box with IoU >= 0.5 with the box output in the above step. 
+    - Repeat past 2 steps for each remaining box. 
+
+- Anchor boxes to identify overlapping objects: To detect two objects, use multiple vectors (called anchor boxes) like above. Assign an object to that anchor box which has the maximum IoU. 
+
+
