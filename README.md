@@ -5,7 +5,7 @@ My notes and solutions for the Coursera Deep Learning Specialization. Since the 
 
 - [Course 1: Neural Networks and Deep Learning](./notes_courses_1_2_3.md)
 
-- [Course 2: Improving Deep Neural Networks]
+- [Course 2: Improving Deep Neural Networks](./notes_courses_1_2_3.md#course-2-improving-deep-neural-networks)
 
 - [Course 3: Structuring Machine Learning Projects]
 
