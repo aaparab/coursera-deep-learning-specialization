@@ -15,4 +15,4 @@ Since the course policy forbids me from sharing my solutions, the quizzes and pr
 
 - [Course 4: Convolutional Neural Networks](./notes_course_4.md)
 
-- Course 5: Sequence Models
+- [Course 5: Sequence Models](./notes_course_5.md)

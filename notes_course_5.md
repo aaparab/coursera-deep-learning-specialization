@@ -73,3 +73,82 @@ So whereas we had \Gamma and (1-\Gamma) in GRUs, here we have the option of keep
 - Deep RNNs: Because of the temporal dimension, these networks can already get quite big even if you have just a small handful of layers. However sometimes we have a deep neural network following the output of the RNN.
 
 
+
+## Week 2: Natural Language Processing & Word Embeddings
+
+- Transfer learning and word embeddings:
+    
+    - Learn (download) word embeddings from large text corpus (1-100B words)
+
+    - Transfer embeddings to new task with small training set (100k words)
+
+    - (Optional) Continue to finetune the word emeddings with new data.
+
+- Word embeddings make precise the following analogy:
+
+    - man : woman :: king : ?
+
+- The similarity function most commonly used is the `cosine similarity`: 
+
+    - sim(e_w1, e_w2) = \frac{e_w1^T . e_w2}{ ||e_w1||_2 .  ||e_w2||_2 }. 
+
+- Can also use `norm` as a dissimilarity function. 
+
+- **Embedding matrix E**: It is a matrix of dimensions mxn where m is the dimension of the word-to-vector space and n is the size of the corpus. The j-th column of E represents the vector corresponding to the j-th word in the corpus. [Video reference](https://www.coursera.org/learn/nlp-sequence-models/lecture/K604Z/embedding-matrix) 
+
+- The matrix E can be learned by using gradient descent! [Video reference](https://www.coursera.org/learn/nlp-sequence-models/lecture/K604Z/embedding-matrix) 
+
+## Week 3: Sequence models & Attention mechanism
+
+### Sequence to sequence architectures:
+
+- [Video reference](https://www.coursera.org/learn/nlp-sequence-models/lecture/v2pRn/picking-the-most-likely-sentence) For tasks such as image captioning or translating a sentence, the usual method of inputting a sequence x^<1>, ..., x^<T_x> to generate an output y^<1>, ..., y^<T_y> needs to be modified. If x^<1>, ..., x^<T_x> represents an encoding of the given input, we feed this input to the RNN first and only then the RNN makes a prediction of the output sequence y^<1>, ..., y^<T_y>. 
+
+- Consider two English translations of the French sentence 
+```
+Jane visite l'Afrique en septembre. 
+```
+namely
+```
+Jane is visiting Africa in September. 
+```
+and 
+```
+Jane is going to be visiting Africa in September. 
+```
+This is a case when a greedy algorithm does not necessarily work, i.e., since `going` is a more popular English word, it might be that 
+```
+P("Jane is going" | "Jane visite l'Afrique en septembre.") > P("Jane is visiting" | "Jane visite l'Afrique en septembre.")
+```
+Hence the *Beam Search* algorithm below. [Video reference](https://www.coursera.org/learn/nlp-sequence-models/lecture/4EtHZ/beam-search)
+
+- Two extreme approaches: Greedy means we only consider the most likely word as the next occurring one. On the other hand considering the entire corpus with their probability gets out of hand in a few words. (Think of the number of ways of playing the first 10 chess moves). 
+
+- *Beam search*: Instead of considering the entire corpus, only consider the top `beam_width` possibilities at every step. At every step we instantiate `beam_width` copies of the network to evaluate partial sentence fragments. 
+
+- `beam_width` = 1 reduces to the greedy search algorithm. 
+
+- Refinement to beam search: Since product of probabilities tends to be numerically unstable, consider applying logarithm and normalizing (by T_y or by T_y^\alpha with \alpha \in (0, 1)). 
+
+- Error analysis with beam search: Whether beam search or the inherent RNN is responsible for poor performance? 
+
+    Given the best sentence-translation, say human-generated called as y*, we compare the probabilities P(y* | x) and P(\hat{y} | x). 
+
+    - If P(y* | x) > P(\hat{y} | x): Beam search chose \hat{y} instead of y* so it is at fault. 
+    - If P(y* | x) <= P(\hat{y} | x): RNN model couldn't predict the best translation. 
+
+    Aggregate this for a set of dev set examples. 
+
+### Attention
+
+- Given a very long sentence, it is difficult to translate the entire sentence so a human would break it down into phrases and try to translate each part. 
+
+- Analogously the RNN marches forward generating one word at a time, until eventually it generates the EOS, and at every step there are attention weights. [Video reference](https://www.coursera.org/learn/nlp-sequence-models/lecture/RDXpX/attention-model-intuition)
+
+- More details about attention: [Video reference](https://www.coursera.org/learn/nlp-sequence-models/lecture/lSwVa/attention-model) Look at context vectors. 
+
+### CTC
+
+- Speech recognition: End-to-end speech recognition has made obsolete the conventional idea of translating audio speech into [phonemes](https://en.wikipedia.org/wiki/Phoneme) to convert into text. 
+
+- CTC cost for speech recognition ([Connectionist temporal classification](https://citeseerx.ist.psu.edu/viewdoc/summary?doi=10.1.1.75.6306)) Although typically T_x is large for audio inputs and T_y (sentence) is small, we use T_x = T_y. The basic rule is to introduce a "blank" character and collapse repeated characters not separated by "blank". [Video reference](https://www.coursera.org/learn/nlp-sequence-models/lecture/sjiUm/speech-recognition)

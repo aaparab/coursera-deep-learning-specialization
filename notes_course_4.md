@@ -115,3 +115,18 @@
 - Anchor boxes to identify overlapping objects: To detect two objects, use multiple vectors (called anchor boxes) like above. Assign an object to that anchor box which has the maximum IoU. 
 
 
+## Week 4: Special applications: Face recognition & Neural style transfer
+
+- One-shot learning: Here the objective is to detect whether the shown face is one among the set of employees' faces or is a stranger. The problem is that each employee has only one image stored in the database. 
+
+- Learn the similarity function, d(im1, im2) = degree of difference between images. 
+
+- Siamese network architecture: Make a CNN predict a vector for every image that can be considered as an _encoding_ of the image. Then the squared difference between two such encodings can be an example of the similarity function above. [Video reference](https://www.coursera.org/learn/convolutional-neural-networks/lecture/bjhmj/siamese-network), [Deepface paper](https://www.cs.toronto.edu/~ranzato/publications/taigman_cvpr14.pdf)
+
+- Triplet loss function: Look at three images - anchor, positive and negative. The positive and anchor are two different images of the same person whereas the negative is not.
+
+- **Neural style transfer**: Artificially generate an image based on the content of one image and style of another. 
+
+- What do deep ConvNets detect? Ng talks about [this paper](https://cs.nyu.edu/~fergus/papers/zeilerECCV2014.pdf): Visualizing and Understanding convolutional Networks that illustrates how initial layers of a deep CNN detect simpler objects (basic shapes and lines) whereas further layers detect more complicated objects like human faces and dogs. [Video reference](https://www.coursera.org/learn/convolutional-neural-networks/lecture/GboGx/what-are-deep-convnets-learning) 
+
+- Loss function for neural style transfer: Given two images say C and S we would like to generate a third image G (randomly initialized) that takes `content` features from C and `style features from S. The loss function would compute the L^2 difference between the earlier layers of G and S and latter layers of C and S. [Video reference](https://www.coursera.org/learn/convolutional-neural-networks/lecture/CvHv6/content-cost-function) 
