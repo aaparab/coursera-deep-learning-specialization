@@ -67,13 +67,13 @@ This reduction in w<sup>l</sup> is referred to as *weight decay*.
 
 - **(Inverted) Dropout Implementation**:
 
-Suppose I implement the dropout regularization on a particular layer with `keep_prob = 0.8`. Then on average, the output `Z = W.A + b` would reduce by 20%, causing an overall reduction on the output values. In order to correct this, we divide the layer by `keep_prob`, i.e., `A = A / keep_dims`.  
+Suppose I implement the dropout regularization on a particular layer with `keep_prob = 0.8`. Then on average, the output `Z = W.A + b` would reduce by 20%, causing an overall reduction on the output values. In order to correct this, we divide the layer by `keep_prob`, i.e., `A = A / keep_prob`.  
 
 - It can be shown that dropout has a similar effect as L2 regularization, i.e., shrink weights.
 
 - Usually input layers have `keep_prob = 1`. Typically use high values of `keep_prob` to layers where you might think overfit more. This means more hyperparameters to tune over. If that isn't preferable, use dropout on select layers _only_ and use the same `keep_prob` in each. 
 
-- Note: Since the cost function `J` with dropout is not well-defined, <span style="text-decoration: underline">when using the error plots, we ignore the dropout.<\span>
+- Note: Since the cost function `J` with dropout is not well-defined, <span style="text-decoration: underline">when using the error plots, we ignore the dropout.
 
 - **Other Regularizations**: 
     - Data augumentations (If detecting images, augument to training set by modifying existing images - distortion, rotation). [Video link](https://www.coursera.org/learn/deep-neural-network/lecture/Pa53F/other-regularization-methods)
